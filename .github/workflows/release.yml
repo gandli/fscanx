@@ -4,6 +4,10 @@ on:
   push:
     tags:
       - '*'
+    branches:
+      - main
+      - master
+  workflow_dispatch:
 
 permissions:
   contents: write

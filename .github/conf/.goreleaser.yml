@@ -11,7 +11,6 @@ builds:
       - linux
       - darwin
       - freebsd
-      - solaris
     goarch:
       - amd64
       - "386"

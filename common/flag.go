@@ -95,6 +95,7 @@ func Flag(Info *HostInfo) {
 	flag.StringVar(&AUtoScanIPLocation, "ai", "1,2,253,254", "which location of a cnet need to scan, default: 1,2,253,254")
 	flag.IntVar(&AutoScanTcpTimeout, "atime", 3, "port scan timeout with auto scan task")
 	flag.BoolVar(&IsParseDomain, "pd", false, "is parse domain to ip and add to port scan")
+	flag.BoolVar(&DomainPortBind, "dp", false, "for domain targets, bind all -p ports to generate http(s)://domain:port URLs")
 
 	flag.Parse()
 

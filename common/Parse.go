@@ -20,6 +20,14 @@ func Parse(Info *HostInfo) {
 	ParseInput(Info)
 	ParseScantype(Info)
 	Info.Ports = PortsInput
+
+	if DomainPortBind && Info.Host != "" {
+		domainUrls, remainingHost := ProcessDomainAsURL(Info.Host)
+		if len(domainUrls) > 0 {
+			Urls = append(Urls, domainUrls...)
+			Info.Host = remainingHost
+		}
+	}
 }
 
 func ParseUser() {

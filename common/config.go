@@ -151,6 +151,7 @@ var (
 	AUtoScanIPLocation string
 	AutoScanTcpTimeout int
 	IsParseDomain      bool
+	DomainPortBind     bool
 )
 
 var (

@@ -586,9 +586,16 @@ func ReadInputFile(filename string) ([]string, error) {
 					HostAndPortList = append(HostAndPortList, fmt.Sprintf("%s:%s", host, port))
 				}
 			} else if Reg_domain.MatchString(line) {
-				// 支持纯域名输入，只探测443、80端口
-				Urls = append(Urls, "http://"+line)
-				Urls = append(Urls, "https://"+line)
+				if DomainPortBind {
+					ports := ParsePort(PortsInput)
+					for _, port := range ports {
+						Urls = append(Urls, "http://"+line+":"+strconv.Itoa(port))
+						Urls = append(Urls, "https://"+line+":"+strconv.Itoa(port))
+					}
+				} else {
+					Urls = append(Urls, "http://"+line)
+					Urls = append(Urls, "https://"+line)
+				}
 				if IsParseDomain {
 					addrs, err := LookupHost(line)
 					if err != nil {
@@ -748,4 +755,27 @@ func RandInt(min, max int) int {
 		return max
 	}
 	return rand.Intn(max-min) + min
+}
+
+// processDomainAsURL 当 -dp 启用时，从 -h 参数中提取纯域名，生成 http(s)://domain:port 格式的 URL，
+// 并返回去掉域名后的剩余 host 字符串（IP 部分）。
+func ProcessDomainAsURL(host string) (urls []string, remainingHost string) {
+	if !DomainPortBind || host == "" {
+		return nil, host
+	}
+	hosts := strings.Split(host, ",")
+	var remaining []string
+	for _, h := range hosts {
+		h = strings.TrimSpace(h)
+		if Reg_domain.MatchString(h) {
+			ports := ParsePort(PortsInput)
+			for _, port := range ports {
+				urls = append(urls, "http://"+h+":"+strconv.Itoa(port))
+				urls = append(urls, "https://"+h+":"+strconv.Itoa(port))
+			}
+		} else {
+			remaining = append(remaining, h)
+		}
+	}
+	return urls, strings.Join(remaining, ",")
 }

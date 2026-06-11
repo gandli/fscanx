@@ -55,12 +55,6 @@ func LogSuccess(formatStr string, a ...any) {
 func SaveLog() {
 	var fl *os.File
 	var ferr error
-	if IsSave {
-		fl, ferr = os.OpenFile(Outputfile, os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0666)
-		if ferr != nil {
-			fmt.Printf("Create %s error, %v\n", Outputfile, ferr)
-		}
-	}
 
 	var colorFlag bool = true
 	whiteStyle := color.New(color.FgWhite)
@@ -69,6 +63,12 @@ func SaveLog() {
 	preTextStyle := color.New(color.FgWhite)
 
 	for result := range Results {
+		if fl == nil && IsSave {
+			fl, ferr = os.OpenFile(Outputfile, os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0666)
+			if ferr != nil {
+				fmt.Printf("Create %s error, %v\n", Outputfile, ferr)
+			}
+		}
 		if !Silent {
 			if Nocolor {
 				fmt.Println(*result)

@@ -48,12 +48,38 @@ jobs:
           echo "=== compressed sizes ==="
           find dist -name 'fscanx*' -exec ls -la {} \;
 
-      - name: "Publish release (skip build)"
-        uses: goreleaser/goreleaser-action@v4
-        with:
-          distribution: goreleaser
-          version: 'v1.26.2'
-          args: "release --skip=build -f .github/conf/.goreleaser.yml"
-          workdir: .
+      - name: "Flatten and checksum"
+        id: pkg
+        run: |
+          mkdir -p /tmp/artifacts
+          # flatten all fscanx binaries into one dir with platform-suffixed names
+          for f in $(find dist -type f -name 'fscanx*' ! -name '*.txt'); do
+            # derive a readable name from the dist subdir, e.g. default_windows_amd64_v1/fscanx.exe -> fscanx_windows_amd64_v1.exe
+            sub=$(dirname "$f" | sed 's#^dist/##; s#^default_##')
+            base=$(basename "$f")
+            if [ "$sub" != "." ]; then
+              name="${base%.*}_${sub}.${base##*.}"
+              # if no extension (linux/macos), just append sub
+              case "$base" in
+                *.*) ;;
+                *) name="${base}_${sub}" ;;
+              esac
+            else
+              name="$base"
+            fi
+            cp "$f" "/tmp/artifacts/$name"
+          done
+          cd /tmp/artifacts
+          sha256sum * > checksums.txt
+          ls -la /tmp/artifacts
+
+      - name: "Publish release"
+        run: |
+          cd /tmp/artifacts
+          gh release create "${GITHUB_REF_NAME}" \
+            --title "${GITHUB_REF_NAME}" \
+            --generate-notes \
+            --repo "${GITHUB_REPOSITORY}" \
+            *
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,13 +1,31 @@
 # fscanx
 
+<p align="center">
+  <img src="assets/readme/hero.svg" alt="fscanx 终端扫描示意" width="100%">
+</p>
+
 > 基于 fscan 打磨的内网资产梳理工具:协议识别、Web 指纹、弱口令爆破、PoC 扫描,原生支持 SOCKS5 代理穿透。
 
-[![Build Status](https://github.com/gandli/fscanx/actions/workflows/release.yml/badge.svg)](https://github.com/gandli/fscanx/actions/workflows/release.yml)
-[![Go](https://img.shields.io/badge/Go-1.20-00ADD8)](https://go.dev)
-[![Windows 7](https://img.shields.io/badge/Windows-7%20%2B-0078D6)](https://www.microsoft.com)
-[![UPX](https://img.shields.io/badge/UPX-compressed-005571)](https://upx.github.io)
+<p align="center">
+  <a href="https://github.com/gandli/fscanx/actions/workflows/release.yml"><img src="https://github.com/gandli/fscanx/actions/workflows/release.yml/badge.svg" alt="Build Status"></a>
+  <a href="https://go.dev"><img src="https://img.shields.io/badge/Go-1.20-00ADD8" alt="Go 1.20"></a>
+  <a href="https://www.microsoft.com"><img src="https://img.shields.io/badge/Windows-7%20%2B-0078D6" alt="Windows 7+"></a>
+  <a href="https://upx.github.io"><img src="https://img.shields.io/badge/UPX-compressed-005571" alt="UPX compressed"></a>
+</p>
 
 **本 fork 的构建改进**:使用 Go 1.20 编译(兼容 Windows 7),产物经 UPX 压缩,打 tag 即通过 GitHub Actions 自动发布跨平台 Release。
+
+## 核心能力
+
+<p align="center">
+  <img src="assets/readme/capabilities.svg" alt="fscanx 核心能力" width="100%">
+</p>
+
+## 构建与平台
+
+<p align="center">
+  <img src="assets/readme/build-pipeline.svg" alt="fscanx 构建与平台支持" width="100%">
+</p>
 
 ## 快速开始
 

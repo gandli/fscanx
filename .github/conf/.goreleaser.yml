@@ -25,12 +25,11 @@ builds:
 upx:
   -
     ids: [ default ]
-    enabled: true
-    goos: ["windows", "linux"]
-    goarch: ["amd64", "386"]
-    compress: fast
-#    lzma: true
-#    brute: true
+    enabled: false
+    # UPX 5.x (installed by ghaction-upx@v3) rejects options goreleaser v1
+    # passes (e.g. `-a`), so compression is disabled. The binaries are
+    # larger but the release is faster and reliable on all platforms.
+    # Re-enable only after validating a goreleaser v2 + UPX 5.x combo.
 archives:
   -
     format: binary

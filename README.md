@@ -1,3 +1,46 @@
+# fscanx
+
+> 基于 fscan 打磨的内网资产梳理工具:协议识别、Web 指纹、弱口令爆破、PoC 扫描,原生支持 SOCKS5 代理穿透。
+
+[![Build Status](https://github.com/gandli/fscanx/actions/workflows/release.yml/badge.svg)](https://github.com/gandli/fscanx/actions/workflows/release.yml)
+[![Go](https://img.shields.io/badge/Go-1.20-00ADD8)](https://go.dev)
+[![Windows 7](https://img.shields.io/badge/Windows-7%20%2B-0078D6)](https://www.microsoft.com)
+[![UPX](https://img.shields.io/badge/UPX-compressed-005571)](https://upx.github.io)
+
+**本 fork 的构建改进**:使用 Go 1.20 编译(兼容 Windows 7),产物经 UPX 压缩,打 tag 即通过 GitHub Actions 自动发布跨平台 Release。
+
+## 快速开始
+
+从 [Releases](https://github.com/gandli/fscanx/releases) 下载对应平台的可执行文件,无需自行编译。
+
+基础用法:
+
+```bash
+# 扫描指定网段(智能预扫描存活 C 段)
+fscanx -h 192.168.0.0/16 -auto -nmap -t 1000 -np
+
+# 从文件读取目标(ip / ip:port / url / 域名 / cidr,每行一个)
+fscanx -hf target.txt -pd -nmap -np
+
+# 通过 SOCKS5 代理扫描目标内网
+fscanx -socks5 socks5://127.0.0.1:1080 -h 192.168.1.1/16 -auto
+```
+
+## 目录
+
+- [2026 更新记录](#2026-更新记录)
+- [大网段智能探测](#1大网段智能探测)
+- [内存优化](#2内存优化)
+- [指纹库变动](#3指纹库变动)
+- [增强的信息收集(-hf)](#4增强的信息收集)
+- [ip 地理位置](#5ip地理位置)
+- [选项变动](#6选项变动)
+- [Socks5 代理模式的端口误报谜题](#8socks5代理模式的端口误报谜题)
+- [使用案例](#9使用案例)
+- [编译(Win7 兼容)](#编译win7-兼容)
+
+---
+
 # 2026 更新记录
 
 2026.06.10，修复socks5+nmap库的探测逻辑下对不开放的端口误报为开放，原因是新增加的超时逻辑处忘记判断是否处于代理模式下；修复netbios信息收集的一处报错。
@@ -527,15 +570,29 @@ web产品识别：
 
 
 
-# 编译
+# 编译(Win7 兼容)
 
-为了避免不必要的麻烦，本项目不提供可执行文件，请自行编译。
+本 fork 已配置 GitHub Actions:打 tag 即自动用 **Go 1.20** 交叉编译全平台二进制(兼容 Windows 7),经 UPX 压缩后发布到 [Releases](https://github.com/gandli/fscanx/releases),无需手动编译。
 
-goreleaser方式：
+如需本地构建:
 
+**方式一:Go 直接编译(需 Go 1.20+)**
+
+```bash
+# Windows 可执行文件(Go 1.20 编译,兼容 Win7)
+CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build -trimpath -ldflags "-s -w" -o fscanx.exe .
+
+# 其他平台
+CGO_ENABLED=0 GOOS=linux   GOARCH=amd64 go build -trimpath -ldflags "-s -w" -o fscanx .
+CGO_ENABLED=0 GOOS=darwin  GOARCH=arm64 go build -trimpath -ldflags "-s -w" -o fscanx .
 ```
-go install github.com/goreleaser/goreleaser@latest
-goreleaser build  --snapshot  --clean
+
+**方式二:goreleaser(需 Go 1.20 + goreleaser v1.26.2)**
+
+```bash
+# 安装指定版本,避免 latest 拉到不兼容版本
+go install github.com/goreleaser/goreleaser@v1.26.2
+goreleaser build --snapshot --clean
 ```
 
-go build方式，直接运行build.bat。
+> 注意:本项目依赖 Go 1.20 的运行时特性以兼容 Windows 7。使用 Go 1.21+ 编译的二进制将无法在 Windows 7 上运行。

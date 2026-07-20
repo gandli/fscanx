@@ -1,0 +1,56 @@
+# Win7-compatible release configuration.
+#
+# Why this file exists:
+#   Go 1.21+ raised the minimum supported Windows version to Windows 10, so
+#   binaries built with Go >= 1.21 crash/refuse to run on Windows 7/8/8.1.
+#   Go 1.20 is the last toolchain with full Windows 7 runtime support, so the
+#   accompanying workflow builds with Go 1.20.x.
+#
+# Scope: ONLY Windows targets (amd64 = 64-bit Win7, 386 = 32-bit Win7). This
+# keeps the Win7-specific artifacts from duplicating the Linux/macOS binaries
+# produced by the main release workflow.
+builds:
+  - id: win7
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - windows
+    goarch:
+      - amd64
+      - "386"
+    flags:
+      - -trimpath
+    ldflags:
+      - -s -w
+
+# NOTE: the top-level `upx` block is supported by the open-source GoReleaser
+# v1 (verified working in CI). If you ever pin to a GoReleaser Pro-only build,
+# move this into a `hooks.post` step instead.
+upx:
+  - ids: [ win7 ]
+    enabled: true
+    goos: [ "windows" ]
+    goarch: [ "amd64", "386" ]
+    compress: best
+
+archives:
+  - format: binary
+    allow_different_binary_count: true
+    name_template: >-
+      {{- .ProjectName }}
+      {{- if eq .Arch "386" }}32{{ end }}
+
+checksum:
+  name_template: 'checksums.txt'
+
+snapshot:
+  name_template: "{{ incpatch .Version }}-next"
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'
+      - '.*\.md$'
+      - '.*\.ya?ml$'

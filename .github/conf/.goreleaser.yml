@@ -11,7 +11,6 @@ builds:
       - linux
       - darwin
       - freebsd
-      - solaris
     goarch:
       - amd64
       - "386"
@@ -30,12 +29,13 @@ builds:
 upx:
   -
     ids: [ default ]
-    enabled: true
+    enabled: false
+    # UPX compression is done manually in release.yml (post-build step) to
+    # avoid goreleaser v1's UPX integration incompatibilities with modern
+    # UPX (5.2.0 emits 'invalid option -a'; 4.2.4 also fails). We call
+    # `upx -9` ourselves so the flags are fully controlled.
     goos: ["windows", "linux"]
     goarch: ["amd64", "386"]
-    compress: best
-#    lzma: true
-#    brute: true
 archives:
   -
     format: binary
@@ -60,5 +60,5 @@ changelog:
     exclude:
       - '^docs:'
       - '^test:'
-      - "^*.md"
-      - "^*.ya?ml"
+      - '.*\.md$'
+      - '.*\.ya?ml$'

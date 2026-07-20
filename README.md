@@ -15,7 +15,22 @@
 
 **本 fork 构建改进**：使用 Go 1.20 编译（兼容 Windows 7），产物经 UPX 压缩，打 tag 即通过 GitHub Actions 自动发布跨平台 Release。
 
-## 快速开始
+## 交互式 TUI
+
+在兼容的 Unix 终端（TTY）中直接运行 `fscanx` 即进入交互式表单：用 ↑/↓ 切换字段、填写目标/端口/代理/开关，末行按 Enter 提交即开始扫描。
+
+```bash
+fscanx          # 进入 TUI 表单
+fscanx -tui     # 强制进入 TUI（含 Windows Terminal 等环境）
+```
+
+**自动降级**：以下情况自动回退原 CLI（参数不变），不破坏既有用法：
+
+- 管道输入（`masscan ... | fscanx -std`）
+- CI / 非 TTY 环境
+- Windows（Win7 conhost 不保证 ANSI 渲染，故默认 CLI；可用 `-tui` 强制）
+
+> TUI 仅作参数收集器，扫描引擎与输出完全复用原 CLI 路径。
 
 从 [Releases](https://github.com/gandli/fscanx/releases) 下载对应平台的可执行文件，无需自行编译。
 

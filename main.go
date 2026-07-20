@@ -1,10 +1,12 @@
 package main
 
 import (
+	"os"
 	"time"
 
 	"github.com/killmonday/fscanx/Plugins"
 	"github.com/killmonday/fscanx/common"
+	"github.com/killmonday/fscanx/tui"
 	//"net/http"
 	_ "net/http/pprof"
 )
@@ -14,28 +16,28 @@ func main() {
 	//	http.ListenAndServe("localhost:6060", nil)
 	//}()
 
-	//go func() {
-	//	time.Sleep(time.Second * 5)
-	//	for {
-	//		var m runtime.MemStats
-	//		runtime.ReadMemStats(&m)
-	//		fmt.Println("\n\n===============================================================================================")
-	//		fmt.Printf("Alloc    堆内存正在使用的 = %.2f MB\n", float64(m.Alloc)/1024/1024)
-	//		fmt.Printf("StackSys 所有协程的栈内存 = %.2f MB\n", float64(m.StackSys)/1024/1024)
-	//		fmt.Printf("HeapSys 栈内存正在使用+预留内存  = %.2f MB\n", float64(m.HeapSys)/1024/1024)
-	//		fmt.Printf("Sys 总内存占用 = %.2f MB\n", float64(m.Sys)/1024/1024)
-	//		fmt.Printf("TotalAlloc = %.2f MB\n", float64(m.TotalAlloc)/1024/1024)
-	//		fmt.Printf("HeapAlloc = %.2f MB\n", float64(m.HeapAlloc)/1024/1024)
-	//		fmt.Printf("HeapReleased = %.2f MB\n", float64(m.HeapReleased)/1024/1024)
-	//		fmt.Printf("OtherSys = %.2f MB\n", float64(m.OtherSys)/1024/1024)
-	//		fmt.Println("当前 Goroutine 数量:", runtime.NumGoroutine())
-	//		fmt.Println("===============================================================================================\n\n")
-	//		//lib.Client.CloseIdleConnections()
-	//		//lib.ClientNoRedirect.CloseIdleConnections()
-	//		time.Sleep(time.Second * 8)
-	//	}
-	//
-	//}()
+	// Interactive TUI mode: only on a capable TTY (Unix), or when the user
+	// explicitly forces it with -tui. This preserves the Win7 / CI /
+	// masscan|fscanx pipe paths (which fall back to the CLI).
+	forceTUI := false
+	for _, a := range os.Args[1:] {
+		if a == "-tui" || a == "--tui" {
+			forceTUI = true
+			break
+		}
+	}
+	if tui.IsInteractive(forceTUI) {
+		args, err := tui.RunTUI()
+		if err != nil {
+			// Cancelled or failed to start TUI — bail out cleanly.
+			if err.Error() != "cancelled" {
+				os.Exit(1)
+			}
+			os.Exit(0)
+		}
+		// Rebuild os.Args so the existing flag-driven flow consumes them.
+		os.Args = append([]string{"fscanx"}, args...)
+	}
 
 	var Info common.HostInfo
 	start := time.Now()

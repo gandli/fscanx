@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300" width="100%" role="img" aria-label="fscanx 核心能力">
+  <title>fscanx 核心能力</title>
+  <defs>
+    <style>
+      .card { fill: #161B22; stroke: #30363D; stroke-width: 1.5; }
+      .ico { fill: none; stroke: #2F81F7; stroke-width: 2.5; }
+      .t { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; font-weight: 700; fill: #E6EDF3; font-size: 22px; }
+      .d { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; fill: #8B949E; font-size: 15px; }
+      .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+      .mut { fill: #8B949E; }
+      .g { fill: #3FB950; }
+    </style>
+  </defs>
+  <rect x="0" y="0" width="1200" height="300" fill="#0D1117"/>
+
+  <!-- card 1: 协议识别 -->
+  <g transform="translate(40,30)">
+    <rect class="card" x="0" y="0" width="270" height="240" rx="10"/>
+    <circle class="ico" cx="34" cy="40" r="14"/>
+    <path class="ico" d="M26 40 h16 M34 32 v16"/>
+    <text x="64" y="46" class="t">协议识别</text>
+    <text x="24" y="92" class="d">gonmap 探针优化</text>
+    <text x="24" y="116" class="d">ssh/smb/rdp/ftp/</text>
+    <text x="24" y="140" class="d">mysql/mssql ...</text>
+    <text x="24" y="178" class="mono mut" font-size="13">-nmap</text>
+    <text x="24" y="206" class="mono g" font-size="13">22 open ssh</text>
+  </g>
+
+  <!-- card 2: Web 指纹 -->
+  <g transform="translate(330,30)">
+    <rect class="card" x="0" y="0" width="270" height="240" rx="10"/>
+    <rect class="ico" x="20" y="26" width="28" height="28" rx="4"/>
+    <path class="ico" d="M20 40 h28 M34 26 v28"/>
+    <text x="64" y="46" class="t">Web 指纹</text>
+    <text x="24" y="92" class="d">fingers 引擎</text>
+    <text x="24" y="116" class="d">标题/框架/证书</text>
+    <text x="24" y="140" class="d">可自定义扩展</text>
+    <text x="24" y="178" class="mono mut" font-size="13">-nmap</text>
+    <text x="24" y="206" class="mono g" font-size="13">nginx/1.21</text>
+  </g>
+
+  <!-- card 3: 弱口令爆破 -->
+  <g transform="translate(620,30)">
+    <rect class="card" x="0" y="0" width="270" height="240" rx="10"/>
+    <path class="ico" d="M24 30 a12 12 0 0 1 24 0 v10 h-24 z"/>
+    <circle class="ico" cx="36" cy="28" r="9"/>
+    <text x="64" y="46" class="t">弱口令爆破</text>
+    <text x="24" y="92" class="d">内置字典</text>
+    <text x="24" y="116" class="d">rdp/ssh/smb/</text>
+    <text x="24" y="140" class="d">mysql/redis ...</text>
+    <text x="24" y="178" class="mono mut" font-size="13">-br</text>
+    <text x="24" y="206" class="mono g" font-size="13">root/root ✓</text>
+  </g>
+
+  <!-- card 4: SOCKS5 穿透 -->
+  <g transform="translate(910,30)">
+    <rect class="card" x="0" y="0" width="270" height="240" rx="10"/>
+    <path class="ico" d="M22 44 h28 M36 30 v28"/>
+    <circle class="ico" cx="36" cy="44" r="5"/>
+    <text x="64" y="46" class="t">SOCKS5 穿透</text>
+    <text x="24" y="92" class="d">代理误报修复</text>
+    <text x="24" y="116" class="d">tcp/udp 全协议</text>
+    <text x="24" y="140" class="d">远程扫描内网</text>
+    <text x="24" y="178" class="mono mut" font-size="13">-socks5</text>
+    <text x="24" y="206" class="mono g" font-size="13">proxy ok</text>
+  </g>
+</svg>

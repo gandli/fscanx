@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 200" width="100%" role="img" aria-label="fscanx 构建与平台">
+  <title>fscanx 构建与平台支持</title>
+  <defs>
+    <style>
+      .box { fill: #161B22; stroke: #30363D; stroke-width: 1.5; }
+      .lbl { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fill: #8B949E; font-size: 13px; }
+      .val { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; font-weight: 700; fill: #E6EDF3; font-size: 22px; }
+      .blue { fill: #2F81F7; }
+      .grn { fill: #3FB950; }
+      .mut { fill: #8B949E; }
+      .plat { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fill: #E6EDF3; font-size: 13px; }
+      .grid { stroke: #30363D; stroke-width: 1; }
+    </style>
+  </defs>
+  <rect x="0" y="0" width="1200" height="200" fill="#0D1117"/>
+
+  <!-- 3 info boxes -->
+  <g transform="translate(40,30)">
+    <rect class="box" x="0" y="0" width="340" height="140" rx="10"/>
+    <text x="20" y="34" class="lbl">RUNTIME</text>
+    <text x="20" y="74" class="val">Go <tspan class="blue">1.20</tspan></text>
+    <text x="20" y="106" class="mut" font-size="14" font-family="system-ui">兼容 Windows 7 / 8 / Server 2008+</text>
+  </g>
+  <g transform="translate(430,30)">
+    <rect class="box" x="0" y="0" width="340" height="140" rx="10"/>
+    <text x="20" y="34" class="lbl">SIZE</text>
+    <text x="20" y="74" class="val">UPX <tspan class="grn">-8</tspan></text>
+    <text x="20" y="106" class="mut" font-size="14" font-family="system-ui">~28MB → ~8MB · 体积压缩约 3.5x</text>
+  </g>
+  <g transform="translate(820,30)">
+    <rect class="box" x="0" y="0" width="340" height="140" rx="10"/>
+    <text x="20" y="34" class="lbl">RELEASE</text>
+    <text x="20" y="74" class="val">tag <tspan class="blue">→</tspan> CI</text>
+    <text x="20" y="106" class="mut" font-size="14" font-family="system-ui">打 tag 自动发布跨平台二进制</text>
+  </g>
+
+  <!-- platform matrix -->
+  <text x="40" y="196" class="plat">windows · linux · darwin · freebsd  ×  amd64 / 386 / arm / arm64  +  mips / mipsle / mips64</text>
+</svg>

@@ -4,6 +4,8 @@ before:
 builds:
   -
     id: default
+    dirs:
+      - "."
     env:
       - CGO_ENABLED=0
     goos:
@@ -60,5 +62,5 @@ changelog:
     exclude:
       - '^docs:'
       - '^test:'
-      - "^*.md"
-      - "^*.ya?ml"
+      - '.*\.md$'
+      - '.*\.ya?ml$'

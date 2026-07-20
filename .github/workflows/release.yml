@@ -53,7 +53,7 @@ jobs:
         with:
           distribution: goreleaser
           version: 'v1.26.2'
-          args: "release --skip=build --clean -f .github/conf/.goreleaser.yml"
+          args: "release --skip=build -f .github/conf/.goreleaser.yml"
           workdir: .
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

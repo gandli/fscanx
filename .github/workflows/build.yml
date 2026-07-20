@@ -37,8 +37,9 @@ jobs:
       - name: UPX version
         run: upx --version
 
-      - name: Install goreleaser
-        run: go install github.com/goreleaser/goreleaser@latest
-
-      - name: Build snapshot
-        run: goreleaser build --snapshot --clean
+      - name: Build snapshot (goreleaser prebuilt binary)
+        uses: goreleaser/goreleaser-action@v6
+        with:
+          distribution: goreleaser
+          version: '~> v1'
+          args: "build --snapshot --clean -f .github/conf/.goreleaser.win7.yml"

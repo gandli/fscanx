@@ -1,0 +1,59 @@
+name: build-win7
+
+# Build Windows 7/8/8.1 compatible binaries (amd64 + 386) and upload them as
+# workflow artifacts. NOT a release step: the main `release.yml` (also pinned
+# to Go 1.20) is the single releaser and already produces Win7-compatible
+# windows binaries on every `v*` tag, so a second `goreleaser release` here
+# would collide with it on the same tag's assets.
+#
+# Why Go 1.20: Go >= 1.21 raised the minimum Windows version to Windows 10, so
+# binaries built with Go >= 1.21 crash/refuse to run on Win7. Go 1.20 is the
+# last toolchain whose runtime still supports Win7/8/8.1.
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Optional version label for the artifact (e.g. v1.0.0); used only for naming.'
+        required: false
+        default: ''
+
+permissions:
+  contents: read
+
+jobs:
+  build-win7:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Go 1.20 (Windows 7 compatible)
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.20.x'
+
+      - name: Show Go version
+        run: go version
+
+      - name: Install UPX
+        uses: crazy-max/ghaction-upx@v3
+        with:
+          install-only: true
+
+      - name: Build Windows 7 binaries (snapshot)
+        uses: goreleaser/goreleaser-action@v6
+        with:
+          distribution: goreleaser
+          version: '~> v1'
+          args: "build --snapshot --clean -f .github/conf/.goreleaser.win7.yml"
+
+      - name: Upload Windows 7 binaries
+        uses: actions/upload-artifact@v4
+        with:
+          name: fscanx-win7-${{ github.event.inputs.tag != '' && github.event.inputs.tag || 'snapshot' }}
+          path: dist/*
+          if-no-files-found: error

@@ -27,12 +27,12 @@ jobs:
     timeout-minutes: 60
     steps:
       - name: Check out code
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
 
       - name: Set up Go 1.20 (Windows 7 compatible)
-        uses: actions/setup-go@v5
+        uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff # v5
         with:
           go-version: '1.20.x'
 
@@ -40,19 +40,25 @@ jobs:
         run: go version
 
       - name: Install UPX
-        uses: crazy-max/ghaction-upx@v3
+        uses: crazy-max/ghaction-upx@db8cc9515a4a7ea1b312cb82fbeae6d716daf777 # v3
         with:
           install-only: true
+          version: 'v4.2.4'
 
       - name: Build Windows 7 binaries (snapshot)
-        uses: goreleaser/goreleaser-action@v6
+        uses: goreleaser/goreleaser-action@e435ccd777264be153ace6237001ef4d979d3a7a # v6
         with:
           distribution: goreleaser
-          version: '~> v1'
+          version: 'v1.26.2'
           args: "build --snapshot --clean -f .github/conf/.goreleaser.win7.yml"
 
+      - name: Compress with UPX manually
+        run: |
+          upx -8 --quiet dist/*/fscanx* 2>&1 | tail -10 || true
+          find dist -name 'fscanx*' -exec ls -la {} \;
+
       - name: Upload Windows 7 binaries
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: fscanx-win7-${{ github.event.inputs.tag != '' && github.event.inputs.tag || 'snapshot' }}
           path: dist/*

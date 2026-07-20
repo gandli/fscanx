@@ -1,0 +1,58 @@
+name: release-win7
+
+# Build fscanx and publish binaries to a GitHub Release.
+# Targets Windows 7/8/8.1 by building with Go 1.20 (the last Go toolchain
+# whose runtime still supports those OS versions; Go >= 1.21 requires
+# Windows 10+ and its binaries crash on Win7).
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Release tag (e.g. v1.0.0-win7); leave empty for a snapshot build'
+        required: false
+        default: ''
+
+permissions:
+  contents: write
+
+jobs:
+  release-win7:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Go 1.20 (Windows 7 compatible)
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.20.x'
+
+      - name: Show Go version
+        run: go version
+
+      - name: Install UPX
+        uses: crazy-max/ghaction-upx@v3
+        with:
+          install-only: true
+
+      - name: UPX version
+        run: upx --version
+
+      - name: Create release with goreleaser
+        uses: goreleaser/goreleaser-action@v6
+        with:
+          distribution: goreleaser
+          version: '~> v1'
+          args: >-
+            release --clean
+            -f .github/conf/.goreleaser.win7.yml
+            ${{ github.event.inputs.tag != '' && format('--release-name {0}', github.event.inputs.tag) || '' }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

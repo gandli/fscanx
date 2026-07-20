@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 440" width="100%" role="img" aria-label="fscanx 终端扫描示意">
+  <title>fscanx — 内网资产梳理工具终端示意</title>
+  <defs>
+    <style>
+      .bg { fill: #0D1117; }
+      .win { fill: #161B22; stroke: #30363D; stroke-width: 1.5; }
+      .bar { fill: #21262D; }
+      .dot { stroke: none; }
+      .r { fill: #FF5F56; } .y { fill: #FFBD2E; } .g { fill: #27C93F; }
+      .mono { font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace; }
+      .fg { fill: #E6EDF3; }
+      .mut { fill: #8B949E; }
+      .blue { fill: #2F81F7; }
+      .green { fill: #3FB950; }
+      .amber { fill: #D29922; }
+      .cur { fill: #2F81F7; }
+      .title { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; font-weight: 700; fill: #E6EDF3; }
+      .sub { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; fill: #8B949E; }
+    </style>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="1200" height="440" rx="0"/>
+
+  <!-- left: title block -->
+  <text x="56" y="150" class="title" font-size="76">fscanx</text>
+  <rect class="blue" x="58" y="170" width="64" height="6" rx="3"/>
+  <text x="56" y="212" class="sub" font-size="22">内网资产梳理 · 协议识别 · Web 指纹</text>
+  <text x="56" y="244" class="sub" font-size="22">弱口令爆破 · PoC 扫描 · SOCKS5 穿透</text>
+  <text x="56" y="300" class="mono green" font-size="20">$ fscanx -h 192.168.1.0/24 -nmap</text>
+  <text x="56" y="334" class="sub" font-size="18">原生支持 Windows 7 · Go 1.20 编译 · UPX 压缩</text>
+
+  <!-- right: terminal window -->
+  <g transform="translate(640,40)">
+    <rect class="win" x="0" y="0" width="520" height="360" rx="10"/>
+    <rect class="bar" x="0" y="0" width="520" height="36" rx="10"/>
+    <rect class="bar" x="0" y="26" width="520" height="10"/>
+    <circle class="dot r" cx="22" cy="18" r="6"/>
+    <circle class="dot y" cx="42" cy="18" r="6"/>
+    <circle class="dot g" cx="62" cy="18" r="6"/>
+    <text x="260" y="22" text-anchor="middle" class="mono mut" font-size="13">fscanx — zsh</text>
+
+    <!-- output -->
+    <text x="22" y="74" class="mono fg" font-size="14">[*] 扫描 192.168.1.0/24</text>
+    <text x="22" y="102" class="mono fg" font-size="14">  192.168.1.1:22    <tspan class="green">open</tspan> ssh</text>
+    <text x="22" y="126" class="mono fg" font-size="14">  192.168.1.1:80    <tspan class="green">open</tspan> http</text>
+    <text x="22" y="150" class="mono fg" font-size="14">  192.168.1.1:445   <tspan class="green">open</tspan> smb</text>
+    <text x="22" y="174" class="mono fg" font-size="14">  192.168.1.20:3389 <tspan class="green">open</tspan> rdp  Win2019</text>
+    <text x="22" y="198" class="mono fg" font-size="14">  192.168.1.50:3306 <tspan class="green">open</tspan> mysql</text>
+    <text x="22" y="226" class="mono mut" font-size="13">[+] Product: nginx/1.21 · php/7.4 · ThinkPHP</text>
+    <text x="22" y="250" class="mono mut" font-size="13">[+] 弱口令 192.168.1.50:3306 root/root</text>
+    <text x="22" y="278" class="mono blue" font-size="14">[*] 存活 5 · 端口 312 · web 18</text>
+    <text x="22" y="306" class="mono fg" font-size="14">fscanx &gt; <tspan class="cur">▌</tspan></text>
+  </g>
+</svg>

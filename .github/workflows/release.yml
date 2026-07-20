@@ -44,7 +44,7 @@ jobs:
 
       - name: "Compress binaries with UPX manually"
         run: |
-          upx -9 --quiet dist/*/fscanx* 2>&1 | tail -20 || true
+          upx -8 --quiet dist/*/fscanx* 2>&1 | tail -20 || true
           echo "=== compressed sizes ==="
           find dist -name 'fscanx*' -exec ls -la {} \;
 

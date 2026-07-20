@@ -10,3 +10,19 @@ result*
 *.xml
 *.xlsx
 .idea
+
+# Sensitive / credentials
+.env*
+*.env
+*.pem
+*.key
+*.pfx
+*.p12
+id_rsa*
+id_ecdsa*
+id_ed25519*
+creds/
+secrets/
+
+# Go
+vendor/

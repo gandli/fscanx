@@ -23,12 +23,13 @@ builds:
     ldflags:
       - -s -w
 
-# NOTE: the top-level `upx` block is supported by the open-source GoReleaser
-# v1 (verified working in CI). If you ever pin to a GoReleaser Pro-only build,
-# move this into a `hooks.post` step instead.
+# NOTE: the top-level `upx` block is DISABLED. GoReleaser v1.26.2's built-in
+# UPX integration is incompatible with modern UPX (4.2.4/5.2.0 emit
+# 'invalid option -a'). Compression is done manually in build-win7.yml via
+# `upx -8` after the build step, mirroring release.yml.
 upx:
   - ids: [ win7 ]
-    enabled: true
+    enabled: false
     goos: [ "windows" ]
     goarch: [ "amd64", "386" ]
     compress: best

@@ -1,5 +1,6 @@
 *.exe
-fscan_arm
+fscanx
+fscanx_arm
 fscan64
 fscan386
 dist/*

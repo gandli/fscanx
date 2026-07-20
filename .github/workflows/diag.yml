@@ -1,0 +1,22 @@
+name: diag
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  diag:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.20.x'
+      - name: go mod tidy (verbose)
+        run: go mod tidy -v 2>&1 | tail -30
+      - name: go build (verbose)
+        run: go build ./... 2>&1 | tail -40

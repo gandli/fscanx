@@ -4,11 +4,12 @@ go 1.20
 
 require (
 	github.com/C-Sto/goWMIExec v0.0.1-deva.0.20210704154847-b8ebd6464a06
+	github.com/alitto/pond v1.9.2
+	github.com/bits-and-blooms/bloom/v3 v3.7.1
 	github.com/chainreactors/logs v0.0.0-20250312104344-9f30fa69d3c9
 	github.com/chainreactors/utils v0.0.0-20250831165528-f06246b0f311
 	github.com/chainreactors/words v0.0.0-20241002061906-25d8893158d9
 	github.com/denisenkom/go-mssqldb v0.12.2
-	github.com/devchat-ai/gopool v0.6.2
 	github.com/dlclark/regexp2 v1.11.5
 	github.com/facebookincubator/nvdtools v0.1.5
 	github.com/fatih/color v1.13.0
@@ -43,11 +44,9 @@ require (
 )
 
 require (
-	github.com/alitto/pond v1.9.2 // indirect
 	github.com/antlr/antlr4/runtime/Go/antlr v1.4.10 // indirect
 	github.com/bahlo/generic-list-go v0.2.0 // indirect
 	github.com/bits-and-blooms/bitset v1.24.3 // indirect
-	github.com/bits-and-blooms/bloom/v3 v3.7.1 // indirect
 	github.com/buger/jsonparser v1.1.1 // indirect
 	github.com/chainreactors/files v0.0.0-20231102192550-a652458cee26 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
@@ -57,6 +56,7 @@ require (
 	github.com/go-dedup/text v0.0.0-20170907015346-8bb1b95e3cb7 // indirect
 	github.com/golang-sql/civil v0.0.0-20190719163853-cb61b32ac6fe // indirect
 	github.com/golang-sql/sqlexp v0.1.0 // indirect
+	github.com/google/go-cmp v0.5.9 // indirect
 	github.com/hashicorp/errwrap v1.0.0 // indirect
 	github.com/mailru/easyjson v0.7.7 // indirect
 	github.com/mattn/go-colorable v0.1.12 // indirect

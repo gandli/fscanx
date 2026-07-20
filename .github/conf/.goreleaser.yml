@@ -28,7 +28,7 @@ upx:
     enabled: true
     goos: ["windows", "linux"]
     goarch: ["amd64", "386"]
-    compress: "9"
+    compress: best
 archives:
   -
     format: binary
